@@ -1,0 +1,30 @@
+{
+  "name": "iot-asset-management-web-application",
+  "version": "1.0.0",
+  "description": "The management web application for assets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a11smiles/IoT-Asset-Management.git"
+  },
+  "author": "Joshua Davis (a11smiles)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/a11smiles/IoT-Asset-Management/issues"
+  },
+  "homepage": "https://github.com/a11smiles/IoT-Asset-Management#readme",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "morgan": "^1.7.0"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.0",
+    "jsonwebtoken": "^7.1.9"
+  }
+}
