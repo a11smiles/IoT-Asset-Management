@@ -2,7 +2,8 @@
 var express = require('express'),
     morgan = require('morgan'),
     path = require('path'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 
 // custom libs
 var config = require('./config.js');
@@ -36,6 +37,9 @@ app.use('/api', apiRoutes);
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
 });
+
+// connect to database
+mongoose.connect(config.database);
 
 // start server
 app.listen(config.port);
