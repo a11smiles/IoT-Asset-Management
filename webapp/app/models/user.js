@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 // user model
 var UserSchema = new Schema({
     username: { type: String, required: true, index: { unique: true } },
-    password: { type: String, required: true, select: false }
+    password: { type: String, required: true, select: false }  // NOTE: 'select' attribute does not currently work with DocumentDB
 });
 
 // hash the password before the user is saved
