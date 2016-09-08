@@ -29,7 +29,15 @@ app.use(morgan('dev'));
 // configure public assets folder
 app.use(express.static(__dirname + '/public'));
 
-// add routes
+// add authentication routes
+var authRoutes = require('./app/routes/authentication')(app, express);
+app.use('/', authRoutes);
+
+// configure jwt authentication token
+var jwt = require('./app/authentication');
+app.use(jwt.verify);
+
+// add api routes
 var apiRoutes = require('./app/routes/api/index')(app, express);
 app.use('/api', apiRoutes);
 
