@@ -7,6 +7,9 @@ var Schema = mongoose.Schema;
 // user model
 var UserSchema = new Schema({
     username: { type: String, required: true, index: { unique: true } },
+    firstName: { type: String, required:true },
+    lastName: { type: String, required: true },
+    department: { type: String },
     password: { type: String, required: true, select: false }  // NOTE: 'select' attribute does not currently work with DocumentDB
 });
 

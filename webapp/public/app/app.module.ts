@@ -11,8 +11,12 @@ import { DashboardComponent }   from './components/dashboard/dashboard.component
 import { AssetsComponent }      from './components/assets/assets.component';
 import { AssetsGridComponent }      from './components/assets-grid/assets-grid.component';
 import { AssetsDetailComponent }    from './components/assets-detail/assets-detail.component';
+import { UsersComponent }           from './components/users/users.component';
+import { UsersGridComponent }       from './components/users-grid/users-grid.component';
+import { UsersDetailComponent }     from './components/users-detail/users-detail.component';
 
-import { AssetService }        from './services/asset.service';
+import { AssetService }         from './services/asset.service';
+import { UserService }          from './services/user.service';
 
 import './rxjs-extensions';
 
@@ -30,10 +34,14 @@ import './rxjs-extensions';
         DashboardComponent,
         AssetsComponent,
         AssetsGridComponent,
-        AssetsDetailComponent
+        AssetsDetailComponent,
+        UsersComponent,
+        UsersGridComponent,
+        UsersDetailComponent
     ],
     providers: [
-        AssetService
+        AssetService,
+        UserService
     ],
     bootstrap: [
         AppComponent

@@ -12,6 +12,9 @@ module.exports = function (app, express) {
             // create new instance of user and hydrate properties from request object
             var user = new User();
             user.username = req.body.username;
+            user.firstName = req.body.firstName;
+            user.lastName = req.body.lastName;
+            user.department = req.body.department;
             user.password = req.body.password;
 
             // save user
@@ -23,7 +26,8 @@ module.exports = function (app, express) {
                         res.send(err);
                 }
 
-                res.json({ message: 'User saved.' });
+                // return user
+                res.json(user);
             });
         })
 
@@ -57,13 +61,17 @@ module.exports = function (app, express) {
                 if (err) res.send(err);
 
                 // update user by hydrating properties from request object
+                user.firstName = req.body.firstName;
+                user.lastName = req.body.lastName;
+                user.department = req.body.department;
                 user.password = req.body.password;
                 
                 // save user
                 user.save(function (err) {
                     if (err) res.send(err);
 
-                    res.json({ message: 'User updated.' });
+                    // return user
+                    res.json(user);
                 });
             });
         })

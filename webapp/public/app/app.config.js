@@ -1,8 +1,8 @@
 "use strict";
 var Config = (function () {
     function Config() {
-        this.apiServerUrl = 'http://localhost:3000/api';
     }
+    Config.apiServerUrl = 'http://localhost:8080/api';
     return Config;
 }());
 exports.Config = Config;

@@ -28,6 +28,9 @@ node_modules
 jspm_packages
 typings
 
+**/*/*.js
+**/*/*.js.map
+
 # Optional npm cache directory
 .npm
 

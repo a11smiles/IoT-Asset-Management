@@ -20,7 +20,11 @@ var dashboard_component_1 = require('./components/dashboard/dashboard.component'
 var assets_component_1 = require('./components/assets/assets.component');
 var assets_grid_component_1 = require('./components/assets-grid/assets-grid.component');
 var assets_detail_component_1 = require('./components/assets-detail/assets-detail.component');
+var users_component_1 = require('./components/users/users.component');
+var users_grid_component_1 = require('./components/users-grid/users-grid.component');
+var users_detail_component_1 = require('./components/users-detail/users-detail.component');
 var asset_service_1 = require('./services/asset.service');
+var user_service_1 = require('./services/user.service');
 require('./rxjs-extensions');
 var AppModule = (function () {
     function AppModule() {
@@ -40,10 +44,14 @@ var AppModule = (function () {
                 dashboard_component_1.DashboardComponent,
                 assets_component_1.AssetsComponent,
                 assets_grid_component_1.AssetsGridComponent,
-                assets_detail_component_1.AssetsDetailComponent
+                assets_detail_component_1.AssetsDetailComponent,
+                users_component_1.UsersComponent,
+                users_grid_component_1.UsersGridComponent,
+                users_detail_component_1.UsersDetailComponent
             ],
             providers: [
-                asset_service_1.AssetService
+                asset_service_1.AssetService,
+                user_service_1.UserService
             ],
             bootstrap: [
                 app_component_1.AppComponent

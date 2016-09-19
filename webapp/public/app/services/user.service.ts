@@ -3,11 +3,11 @@ import { Http, Headers }            from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Asset }            from '../models/asset';
+import { User }            from '../models/user';
 import { Config }           from '../app.config';
 
 @Injectable()
-export class AssetService {
+export class UserService {
     private headers: Headers;
 
     constructor(private _http: Http) { 
@@ -17,36 +17,36 @@ export class AssetService {
         this.headers.append('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNDc0MjMzNjAzLCJleHAiOjE0NzQzMjAwMDN9.gIf0Lxxs50ExfHq3LDTw7gOYYdc9G0MRuL0wjFOeUvI');
     }
 
-     getAssets(): Promise<Asset[]> {
-        return this._http.get(Config.apiServerUrl + 'assets', { headers: this.headers })
+     getUsers(): Promise<User[]> {
+        return this._http.get(Config.apiServerUrl + 'users', { headers: this.headers })
                    .toPromise()
-                   .then(response => response.json() as Asset[])
+                   .then(response => response.json() as User[])
                    .catch(this.handleError);
     }
 
-    getAsset(id: number): Promise<Asset> {
-        return this._http.get(Config.apiServerUrl + 'assets/' + id, {headers: this.headers })
+    getUser(username: string): Promise<User> {
+        return this._http.get(Config.apiServerUrl + 'users/' + username, {headers: this.headers })
                     .toPromise()
-                    .then(response => response.json() as Asset)
+                    .then(response => response.json() as User)
                     .catch(this.handleError);
     }
 
-    update(asset: Asset): Promise<Asset> {
-        return this._http.put(Config.apiServerUrl + 'assets/' + asset.id, JSON.stringify(asset), {headers: this.headers})
+    update(user: User): Promise<User> {
+        return this._http.put(Config.apiServerUrl + 'users/' + user.username, JSON.stringify(user), {headers: this.headers})
                     .toPromise()
-                    .then(response => response.json() as Asset)
+                    .then(response => response.json() as User)
                     .catch(this.handleError);
     }
 
-    create(asset: Asset): Promise<Asset> {
-        return this._http.post(Config.apiServerUrl + 'assets', JSON.stringify(asset), {headers: this.headers})
+    create(user: User): Promise<User> {
+        return this._http.post(Config.apiServerUrl + 'users', JSON.stringify(user), {headers: this.headers})
                     .toPromise()
-                    .then(response => response.json() as Asset)
+                    .then(response => response.json() as User)
                     .catch(this.handleError);
     }
 
-    delete(id: number): Promise<void> {
-        return this._http.delete(Config.apiServerUrl + 'assets/' + id, {headers: this.headers})
+    delete(username: string): Promise<void> {
+        return this._http.delete(Config.apiServerUrl + 'users/' + username, {headers: this.headers})
                     .toPromise()
                     .then(() => null)
                     .catch(this.handleError);
