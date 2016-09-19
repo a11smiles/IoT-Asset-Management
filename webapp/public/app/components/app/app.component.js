@@ -13,6 +13,12 @@ var AppComponent = (function () {
     function AppComponent() {
         this.title = 'Asset Manager';
     }
+    AppComponent.prototype.loggedIn = function () {
+        if (localStorage.getItem('token')) {
+            return true;
+        }
+        return false;
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

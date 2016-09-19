@@ -42,5 +42,12 @@ module.exports = function (app, express) {
 
         });
 
+    authRouter.route('/authenticate/verify')
+
+        .post(function (req, res) {
+            var auth = require('../authentication');
+            auth.verify(req, res, isValid => { res.json({ success: isValid }); }, true);
+        });
+
     return authRouter;
 }

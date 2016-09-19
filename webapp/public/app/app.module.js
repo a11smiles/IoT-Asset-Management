@@ -23,8 +23,11 @@ var assets_detail_component_1 = require('./components/assets-detail/assets-detai
 var users_component_1 = require('./components/users/users.component');
 var users_grid_component_1 = require('./components/users-grid/users-grid.component');
 var users_detail_component_1 = require('./components/users-detail/users-detail.component');
+var login_component_1 = require('./components/login/login.component');
 var asset_service_1 = require('./services/asset.service');
 var user_service_1 = require('./services/user.service');
+var authentication_service_1 = require('./services/authentication.service');
+var authguard_1 = require('./guards/authguard');
 require('./rxjs-extensions');
 var AppModule = (function () {
     function AppModule() {
@@ -47,11 +50,14 @@ var AppModule = (function () {
                 assets_detail_component_1.AssetsDetailComponent,
                 users_component_1.UsersComponent,
                 users_grid_component_1.UsersGridComponent,
-                users_detail_component_1.UsersDetailComponent
+                users_detail_component_1.UsersDetailComponent,
+                login_component_1.LoginComponent
             ],
             providers: [
                 asset_service_1.AssetService,
-                user_service_1.UserService
+                user_service_1.UserService,
+                authentication_service_1.AuthenticationService,
+                authguard_1.AuthGuard
             ],
             bootstrap: [
                 app_component_1.AppComponent

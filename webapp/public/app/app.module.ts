@@ -14,9 +14,12 @@ import { AssetsDetailComponent }    from './components/assets-detail/assets-deta
 import { UsersComponent }           from './components/users/users.component';
 import { UsersGridComponent }       from './components/users-grid/users-grid.component';
 import { UsersDetailComponent }     from './components/users-detail/users-detail.component';
+import { LoginComponent }           from './components/login/login.component';
 
-import { AssetService }         from './services/asset.service';
-import { UserService }          from './services/user.service';
+import { AssetService }             from './services/asset.service';
+import { UserService }              from './services/user.service';
+import { AuthenticationService }    from './services/authentication.service';
+import { AuthGuard }                from './guards/authguard';
 
 import './rxjs-extensions';
 
@@ -37,11 +40,14 @@ import './rxjs-extensions';
         AssetsDetailComponent,
         UsersComponent,
         UsersGridComponent,
-        UsersDetailComponent
+        UsersDetailComponent,
+        LoginComponent
     ],
     providers: [
         AssetService,
-        UserService
+        UserService,
+        AuthenticationService,
+        AuthGuard
     ],
     bootstrap: [
         AppComponent

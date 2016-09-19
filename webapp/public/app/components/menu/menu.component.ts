@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router }               from '@angular/router';
 
 @Component ({
     moduleId: module.id,
@@ -10,4 +11,14 @@ import { Component, Input } from '@angular/core';
 export class MenuComponent {
     @Input()
     title: string;
+
+    constructor(
+        private _router: Router
+    ) {}
+
+    logout():void {
+        localStorage.removeItem('token');
+
+        this._router.navigate(['/login']);
+    }
  }

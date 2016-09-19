@@ -18,34 +18,34 @@ var AssetService = (function () {
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
-        this.headers.append('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNDc0MjMzNjAzLCJleHAiOjE0NzQzMjAwMDN9.gIf0Lxxs50ExfHq3LDTw7gOYYdc9G0MRuL0wjFOeUvI');
+        this.headers.append('x-access-token', localStorage.getItem('token'));
     }
     AssetService.prototype.getAssets = function () {
-        return this._http.get(app_config_1.Config.apiServerUrl + 'assets', { headers: this.headers })
+        return this._http.get(app_config_1.Config.apiServerUrl + '/assets', { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     AssetService.prototype.getAsset = function (id) {
-        return this._http.get(app_config_1.Config.apiServerUrl + 'assets/' + id, { headers: this.headers })
+        return this._http.get(app_config_1.Config.apiServerUrl + '/assets/' + id, { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     AssetService.prototype.update = function (asset) {
-        return this._http.put(app_config_1.Config.apiServerUrl + 'assets/' + asset.id, JSON.stringify(asset), { headers: this.headers })
+        return this._http.put(app_config_1.Config.apiServerUrl + '/assets/' + asset.id, JSON.stringify(asset), { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     AssetService.prototype.create = function (asset) {
-        return this._http.post(app_config_1.Config.apiServerUrl + 'assets', JSON.stringify(asset), { headers: this.headers })
+        return this._http.post(app_config_1.Config.apiServerUrl + '/assets', JSON.stringify(asset), { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     AssetService.prototype.delete = function (id) {
-        return this._http.delete(app_config_1.Config.apiServerUrl + 'assets/' + id, { headers: this.headers })
+        return this._http.delete(app_config_1.Config.apiServerUrl + '/assets/' + id, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);

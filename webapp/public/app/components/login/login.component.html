@@ -1,0 +1,26 @@
+<div class="row centered-form vertical-center" *ngIf="!isLoading">
+    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Please Login</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" [(ngModel)]="loginVM.username" />
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" [(ngModel)]="loginVM.password" />
+                </div>
+
+                <div class="alert alert-danger" *ngIf="errorMsg">
+                    {{ errorMsg }}
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary" (click)="login()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>

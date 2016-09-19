@@ -21,6 +21,7 @@ html, body {
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-brand:hover {
     color:#fff;
+    cursor: pointer;
 }
 
 .container-panel {
@@ -49,4 +50,12 @@ h1 {
 .btn-primary:hover {
     background-color: #777;
     border:1px solid #777;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
 }

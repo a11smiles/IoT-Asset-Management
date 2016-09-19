@@ -14,39 +14,39 @@ export class AssetService {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
-        this.headers.append('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNDc0MjMzNjAzLCJleHAiOjE0NzQzMjAwMDN9.gIf0Lxxs50ExfHq3LDTw7gOYYdc9G0MRuL0wjFOeUvI');
+        this.headers.append('x-access-token', localStorage.getItem('token'));
     }
 
      getAssets(): Promise<Asset[]> {
-        return this._http.get(Config.apiServerUrl + 'assets', { headers: this.headers })
+        return this._http.get(Config.apiServerUrl + '/assets', { headers: this.headers })
                    .toPromise()
                    .then(response => response.json() as Asset[])
                    .catch(this.handleError);
     }
 
     getAsset(id: number): Promise<Asset> {
-        return this._http.get(Config.apiServerUrl + 'assets/' + id, {headers: this.headers })
+        return this._http.get(Config.apiServerUrl + '/assets/' + id, {headers: this.headers })
                     .toPromise()
                     .then(response => response.json() as Asset)
                     .catch(this.handleError);
     }
 
     update(asset: Asset): Promise<Asset> {
-        return this._http.put(Config.apiServerUrl + 'assets/' + asset.id, JSON.stringify(asset), {headers: this.headers})
+        return this._http.put(Config.apiServerUrl + '/assets/' + asset.id, JSON.stringify(asset), {headers: this.headers})
                     .toPromise()
                     .then(response => response.json() as Asset)
                     .catch(this.handleError);
     }
 
     create(asset: Asset): Promise<Asset> {
-        return this._http.post(Config.apiServerUrl + 'assets', JSON.stringify(asset), {headers: this.headers})
+        return this._http.post(Config.apiServerUrl + '/assets', JSON.stringify(asset), {headers: this.headers})
                     .toPromise()
                     .then(response => response.json() as Asset)
                     .catch(this.handleError);
     }
 
     delete(id: number): Promise<void> {
-        return this._http.delete(Config.apiServerUrl + 'assets/' + id, {headers: this.headers})
+        return this._http.delete(Config.apiServerUrl + '/assets/' + id, {headers: this.headers})
                     .toPromise()
                     .then(() => null)
                     .catch(this.handleError);

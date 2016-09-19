@@ -1,5 +1,6 @@
 export class Config {
     
-    static apiServerUrl: string = 'http://localhost:8080/api';
+    static apiServer: string = 'http://localhost:3000';
+    static apiServerUrl: string = Config.apiServer + '/api';
 
 }

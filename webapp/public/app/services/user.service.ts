@@ -14,39 +14,39 @@ export class UserService {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
-        this.headers.append('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNDc0MjMzNjAzLCJleHAiOjE0NzQzMjAwMDN9.gIf0Lxxs50ExfHq3LDTw7gOYYdc9G0MRuL0wjFOeUvI');
+        this.headers.append('x-access-token', localStorage.getItem('token'));
     }
 
      getUsers(): Promise<User[]> {
-        return this._http.get(Config.apiServerUrl + 'users', { headers: this.headers })
+        return this._http.get(Config.apiServerUrl + '/users', { headers: this.headers })
                    .toPromise()
                    .then(response => response.json() as User[])
                    .catch(this.handleError);
     }
 
     getUser(username: string): Promise<User> {
-        return this._http.get(Config.apiServerUrl + 'users/' + username, {headers: this.headers })
+        return this._http.get(Config.apiServerUrl + '/users/' + username, {headers: this.headers })
                     .toPromise()
                     .then(response => response.json() as User)
                     .catch(this.handleError);
     }
 
     update(user: User): Promise<User> {
-        return this._http.put(Config.apiServerUrl + 'users/' + user.username, JSON.stringify(user), {headers: this.headers})
+        return this._http.put(Config.apiServerUrl + '/users/' + user.username, JSON.stringify(user), {headers: this.headers})
                     .toPromise()
                     .then(response => response.json() as User)
                     .catch(this.handleError);
     }
 
     create(user: User): Promise<User> {
-        return this._http.post(Config.apiServerUrl + 'users', JSON.stringify(user), {headers: this.headers})
+        return this._http.post(Config.apiServerUrl + '/users', JSON.stringify(user), {headers: this.headers})
                     .toPromise()
                     .then(response => response.json() as User)
                     .catch(this.handleError);
     }
 
     delete(username: string): Promise<void> {
-        return this._http.delete(Config.apiServerUrl + 'users/' + username, {headers: this.headers})
+        return this._http.delete(Config.apiServerUrl + '/users/' + username, {headers: this.headers})
                     .toPromise()
                     .then(() => null)
                     .catch(this.handleError);

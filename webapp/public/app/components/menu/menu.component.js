@@ -9,9 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var MenuComponent = (function () {
-    function MenuComponent() {
+    function MenuComponent(_router) {
+        this._router = _router;
     }
+    MenuComponent.prototype.logout = function () {
+        localStorage.removeItem('token');
+        this._router.navigate(['/login']);
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
@@ -23,7 +29,7 @@ var MenuComponent = (function () {
             templateUrl: 'menu.component.html',
             styleUrls: ['menu.component.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router])
     ], MenuComponent);
     return MenuComponent;
 }());

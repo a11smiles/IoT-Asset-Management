@@ -2,7 +2,8 @@
 var Config = (function () {
     function Config() {
     }
-    Config.apiServerUrl = 'http://localhost:8080/api';
+    Config.apiServer = 'http://localhost:3000';
+    Config.apiServerUrl = Config.apiServer + '/api';
     return Config;
 }());
 exports.Config = Config;
