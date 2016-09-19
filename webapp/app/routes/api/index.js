@@ -2,6 +2,10 @@ module.exports = function(app, express) {
 
     var apiRouter = express.Router();
 
+    // configure jwt authentication token for api access
+    var jwt = require('../../authentication');
+    apiRouter.use(jwt.verify);
+
     // set default 
     apiRouter.get('/', function(req, res) {
         res.end();

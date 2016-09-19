@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <base href="/" />
+        <title>IoT</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="/scripts/angular/core-js/client/shim.min.js"></script>
+        <script src="/scripts/angular/zone.js/dist/zone.js"></script>
+        <script src="/scripts/angular/reflect-metadata/Reflect.js"></script>
+        <script src="/scripts/angular/systemjs/dist/system.src.js"></script>
+
+        <script src="/scripts/systemjs.config.js"></script>
+        <script>
+            System.import('app').catch(function(err) { console.err(err); });
+        </script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ng2-bootstrap/1.1.5/ng2-bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css/styles.css" />
+
+    </head>
+    <body>
+        <iot-app>Loading...</iot-app>       
+    </body>
+</html>

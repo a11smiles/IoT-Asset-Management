@@ -14,6 +14,7 @@ module.exports = function (app, express) {
             asset.id = req.body.id;
             asset.description = req.body.description;
             asset.owner = req.body.owner;
+            asset.lastUpdate = new Date().toISOString();
 
             // save asset
             asset.save(function (err) {
@@ -24,7 +25,8 @@ module.exports = function (app, express) {
                         res.send(err);
                 }
 
-                res.json({ message: 'Asset saved.' });
+                // return created asset
+                res.json(asset);
             });
         })
 
@@ -32,7 +34,7 @@ module.exports = function (app, express) {
         .get(function (req, res) {
 
             // query database for all assets
-            Asset.find(function (err, assets) {
+            Asset.find({}).sort({id: 1}).exec(function (err, assets) {
                 if (err) res.send(err);
 
                 res.json(assets);
@@ -60,13 +62,14 @@ module.exports = function (app, express) {
                 // update asset by hydrating properties from request object
                 asset.description = req.body.description;
                 asset.owner = req.body.owner;
-                lastUpdate = new Date().toISOString();
+                asset.lastUpdate = new Date().toISOString();
                 
                 // save asset
                 asset.save(function (err) {
                     if (err) res.send(err);
 
-                    res.json({ message: 'Asset updated.' });
+                    // return updated asset
+                    res.json(asset);
                 });
             });
         })

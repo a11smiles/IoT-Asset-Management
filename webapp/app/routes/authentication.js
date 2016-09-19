@@ -1,5 +1,6 @@
 var User = require('../models/user.js'),
-    config = require('../../config.js');
+    config = require('../../config.js'),
+    jwt = require('jsonwebtoken');
 
 
 module.exports = function (app, express) {

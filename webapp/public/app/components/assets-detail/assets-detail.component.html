@@ -1,0 +1,22 @@
+<div class="container-fluid" *ngIf="asset">
+    <h1>Asset<span *ngIf="asset._id">: {{ asset.id }}</span></h1>
+    <div class="container-panel col-md-6">
+        <div class="form-group" *ngIf="!asset._id">
+            <label for="id">Id</label>
+            <input id="id" class="form-control" [(ngModel)]="asset.id" placeholder="id" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input id="description" class="form-control" [(ngModel)]="asset.description" placeholder="description" />
+        </div>
+        <div class="form-group">
+            <label for="owner">Owner</label>
+            <input id="owner" class="form-control" [(ngModel)]="asset.owner" placeholder="owner" />
+        </div>
+        <div class="form-group" *ngIf="asset._id">
+            <label>Last Updated</label>
+            <span class="form-control" disabled>{{ asset.lastUpdate | date: 'MM/dd/yyyy HH:mm:ss' }}</span>
+        </div>
+        <button class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+</div>
