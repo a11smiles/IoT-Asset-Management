@@ -16,7 +16,7 @@
                     <td><a [routerLink]="['/asset', asset.id]">{{asset.id}}</a></td>
                     <td>{{asset.description}}</td>
                     <td>{{asset.owner}}</td>
-                    <td>{{asset.lastUpdate | date: 'MM/dd/yyyy HH:mm:ss'}}</td>
+                    <td>{{asset.lastUpdate | customDate }}</td>
                     <td> <button class="btn btn-danger btn-xs" (click)="delete(asset.id)">Delete</button></td>
                 </tr>
             </tbody>

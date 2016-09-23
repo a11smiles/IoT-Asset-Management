@@ -19,5 +19,9 @@ module.exports = function(app, express) {
     var UserRoutes = require('./user.js')(app, express);
     apiRouter.use('/users', UserRoutes);
 
+    // add routes for azure api
+    var AzureRoutes = require('./azure.js')(app, express);
+    apiRouter.use('/azure', AzureRoutes);
+
     return apiRouter;
 }

@@ -26,8 +26,10 @@ var users_detail_component_1 = require('./components/users-detail/users-detail.c
 var login_component_1 = require('./components/login/login.component');
 var asset_service_1 = require('./services/asset.service');
 var user_service_1 = require('./services/user.service');
+var location_service_1 = require('./services/location.service');
 var authentication_service_1 = require('./services/authentication.service');
 var authguard_1 = require('./guards/authguard');
+var custom_date_pipe_1 = require('./infrastructure/custom-date.pipe');
 require('./rxjs-extensions');
 var AppModule = (function () {
     function AppModule() {
@@ -51,11 +53,13 @@ var AppModule = (function () {
                 users_component_1.UsersComponent,
                 users_grid_component_1.UsersGridComponent,
                 users_detail_component_1.UsersDetailComponent,
-                login_component_1.LoginComponent
+                login_component_1.LoginComponent,
+                custom_date_pipe_1.CustomDatePipe
             ],
             providers: [
                 asset_service_1.AssetService,
                 user_service_1.UserService,
+                location_service_1.LocationService,
                 authentication_service_1.AuthenticationService,
                 authguard_1.AuthGuard
             ],

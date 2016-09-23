@@ -18,8 +18,11 @@ import { LoginComponent }           from './components/login/login.component';
 
 import { AssetService }             from './services/asset.service';
 import { UserService }              from './services/user.service';
+import { LocationService }          from './services/location.service';
 import { AuthenticationService }    from './services/authentication.service';
 import { AuthGuard }                from './guards/authguard';
+
+import { CustomDatePipe }           from './infrastructure/custom-date.pipe';
 
 import './rxjs-extensions';
 
@@ -41,11 +44,13 @@ import './rxjs-extensions';
         UsersComponent,
         UsersGridComponent,
         UsersDetailComponent,
-        LoginComponent
+        LoginComponent,
+        CustomDatePipe
     ],
     providers: [
         AssetService,
         UserService,
+        LocationService,
         AuthenticationService,
         AuthGuard
     ],

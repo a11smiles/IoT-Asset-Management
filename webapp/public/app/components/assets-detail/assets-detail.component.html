@@ -1,6 +1,6 @@
 <div class="container-fluid" *ngIf="asset">
     <h1>Asset<span *ngIf="asset._id">: {{ asset.id }}</span></h1>
-    <div class="container-panel col-md-6">
+    <div class="container-panel col-md-5">
         <div class="form-group" *ngIf="!asset._id">
             <label for="id">Id</label>
             <input id="id" class="form-control" [(ngModel)]="asset.id" placeholder="id" />
@@ -15,8 +15,31 @@
         </div>
         <div class="form-group" *ngIf="asset._id">
             <label>Last Updated</label>
-            <span class="form-control" disabled>{{ asset.lastUpdate | date: 'MM/dd/yyyy HH:mm:ss' }}</span>
+            <span class="form-control" disabled>{{ asset.lastUpdate | customDate }}</span>
         </div>
         <button class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+    <div class="container-panel col-md-5 col-md-offset-1" *ngIf="asset._id">
+        <div class="form-group">
+            <label>Location</label>
+            <table class="table table-striped" *ngIf="location">
+                <thead>
+                    <tr>
+                        <th>Device</th>
+                        <th>Power</th>
+                        <th>RSSI</th>
+                        <th>Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{location[0].IoTHub.ConnectionDeviceId}}</td>
+                        <td>{{location[0].measuredPower}}</td>
+                        <td>{{location[0].rssi}}</td>
+                        <td>{{location[0].accuracy | number:'.2-2'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

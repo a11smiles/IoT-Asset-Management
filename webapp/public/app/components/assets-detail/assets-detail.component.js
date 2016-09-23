@@ -12,9 +12,11 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var asset_1 = require('../../models/asset');
 var asset_service_1 = require('../../services/asset.service');
+var location_service_1 = require('../../services/location.service');
 var AssetsDetailComponent = (function () {
-    function AssetsDetailComponent(_assetService, _route) {
+    function AssetsDetailComponent(_assetService, _locationService, _route) {
         this._assetService = _assetService;
+        this._locationService = _locationService;
         this._route = _route;
     }
     AssetsDetailComponent.prototype.ngOnInit = function () {
@@ -23,7 +25,10 @@ var AssetsDetailComponent = (function () {
             var id = +params['id'];
             if (!!id) {
                 _this._assetService.getAsset(id)
-                    .then(function (asset) { return _this.asset = asset; });
+                    .then(function (asset) {
+                    _this.asset = asset;
+                    _this.getLocation();
+                });
             }
             else
                 _this.asset = new asset_1.Asset();
@@ -38,13 +43,24 @@ var AssetsDetailComponent = (function () {
             this._assetService.create(this.asset)
                 .then(function (asset) { return _this.asset = asset; });
     };
+    AssetsDetailComponent.prototype.getLocation = function () {
+        var _this = this;
+        if (!!this.asset._id)
+            setInterval(function () {
+                _this._locationService.getLocation()
+                    .then(function (response) {
+                    _this.location = response;
+                    //console.log(this.location[0].rssi); 
+                });
+            }, 5000);
+    };
     AssetsDetailComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'assets-detail',
             templateUrl: 'assets-detail.component.html'
         }), 
-        __metadata('design:paramtypes', [asset_service_1.AssetService, router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [asset_service_1.AssetService, location_service_1.LocationService, router_1.ActivatedRoute])
     ], AssetsDetailComponent);
     return AssetsDetailComponent;
 }());
