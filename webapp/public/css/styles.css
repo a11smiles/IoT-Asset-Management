@@ -1,0 +1,62 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #eaeaea;
+}
+
+.navbar-default {
+    border:0px;
+    border-bottom:1px solid #ccc;
+    border-radius: 0px;
+    background-color: #2A3F54;
+}
+
+.navbar-default .navbar-nav>li>a,
+.navbar-default .navbar-nav>li>a:active,
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:active {
+    color:#ccc;
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-brand:hover {
+    color:#fff;
+    cursor: pointer;
+}
+
+.container-panel {
+    background-color: #fff;
+    border-radius: 5px;
+    border:1px solid #ccc;
+    padding:20px;
+    margin-bottom: 20px;
+}
+
+.table {
+    margin-bottom: 0px;
+    font-size:.95em;
+    color: #73879C;
+}
+
+h1 {
+    font-size:2em;
+    color: #73879C;
+}
+
+.btn-primary {
+    background-color: #2A3F54;
+    border:1px solid #2A3F54;
+}
+
+.btn-primary:hover {
+    background-color: #777;
+    border:1px solid #777;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
