@@ -12,6 +12,7 @@ module.exports = function (app, express) {
             // create new instance of asset and hydrate properties from request object
             var asset = new Asset();
             asset.id = req.body.id;
+            asset.uuid = req.body.uuid;
             asset.description = req.body.description;
             asset.owner = req.body.owner;
             asset.lastUpdate = new Date().toISOString();
@@ -60,6 +61,7 @@ module.exports = function (app, express) {
                 if (err) res.send(err);
 
                 // update asset by hydrating properties from request object
+                asset.uuid = req.body.uuid;
                 asset.description = req.body.description;
                 asset.owner = req.body.owner;
                 asset.lastUpdate = new Date().toISOString();

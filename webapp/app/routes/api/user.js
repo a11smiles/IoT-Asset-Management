@@ -24,10 +24,10 @@ module.exports = function (app, express) {
                         return res.json({ success: false, message: 'A user with that username already exists.' });
                     else
                         res.send(err);
+                } else {
+                    // return user
+                    res.json(user);
                 }
-
-                // return user
-                res.json(user);
             });
         })
 
@@ -64,7 +64,7 @@ module.exports = function (app, express) {
                 user.firstName = req.body.firstName;
                 user.lastName = req.body.lastName;
                 user.department = req.body.department;
-                user.password = req.body.password;
+                if (!!req.body.password) user.password = req.body.password;
                 
                 // save user
                 user.save(function (err) {

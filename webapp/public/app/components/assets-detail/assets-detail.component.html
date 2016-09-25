@@ -6,6 +6,10 @@
             <input id="id" class="form-control" [(ngModel)]="asset.id" placeholder="id" />
         </div>
         <div class="form-group">
+            <label for="uuid">UUID</label>
+            <input id="uuid" class="form-control" [(ngModel)]="asset.uuid" placeholder="uuid" />
+        </div>
+        <div class="form-group">
             <label for="description">Description</label>
             <input id="description" class="form-control" [(ngModel)]="asset.description" placeholder="description" />
         </div>
@@ -22,7 +26,7 @@
     <div class="container-panel col-md-5 col-md-offset-1" *ngIf="asset._id">
         <div class="form-group">
             <label>Location</label>
-            <table class="table table-striped" *ngIf="location">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Device</th>
@@ -32,11 +36,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{{location[0].IoTHub.ConnectionDeviceId}}</td>
-                        <td>{{location[0].measuredPower}}</td>
-                        <td>{{location[0].rssi}}</td>
-                        <td>{{location[0].accuracy | number:'.2-2'}}</td>
+                    <tr *ngFor="let location of locations">
+                        <td>{{location.IoTHub.ConnectionDeviceId}}</td>
+                        <td>{{location.measuredPower}}</td>
+                        <td>{{location.rssi}}</td>
+                        <td>{{location.accuracy | number:'.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>

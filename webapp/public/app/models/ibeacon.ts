@@ -9,7 +9,7 @@ export class IBeacon {
     rssi: number;
     accuracy: number;
     proximity: string;
-    EventProcessedUtcTime: string;
+    EventEnqueuedUtcTime: string;
     IoTHub: IoTHub;
 }
 

@@ -14,7 +14,7 @@ import { IBeacon }                          from '../../models/ibeacon';
 
 export class AssetsDetailComponent implements OnInit {
     asset: Asset;
-    location: IBeacon;
+    locations: IBeacon[] = [];
     
     constructor(
         private _assetService: AssetService,
@@ -46,13 +46,50 @@ export class AssetsDetailComponent implements OnInit {
     }
 
     getLocation(): void {
-        if (!!this.asset._id)
+        if (!!this.asset._id && !!this.asset.uuid)
             setInterval(() => {
-                this._locationService.getLocation()
+                this._locationService.getLocation(this.asset.uuid)
                     .then(response => { 
-                        this.location = response;
-                        //console.log(this.location[0].rssi); 
+                        this.locations = this.filterLocations(response);
                     });
             }, 5000);
+    }
+
+    private filterLocations(data): IBeacon[] {
+        var locs:IBeacon[] = [];
+
+        // get distinct devices
+        var devices:string[] = [];
+        for (var i = 0; i < data.length; i++) 
+            if (devices.indexOf(data[i].IoTHub.ConnectionDeviceId) == -1)
+                devices.push(data[i].IoTHub.ConnectionDeviceId);
+        
+        // sort devices
+        devices.sort();
+
+        // for each device, get the latest time and add to location array
+        for (var j = 0; j < devices.length; j++) {
+            var devLocs:IBeacon[] = [];
+
+            // only get locations for that device
+            devLocs = data.filter(function(loc) {
+                return loc.IoTHub.ConnectionDeviceId == devices[j];
+            });
+
+            // sort locations descending
+            devLocs.sort(function(a, b){
+                var c = new Date(a.EventEnqueuedUtcTime);
+                var d = new Date(b.EventEnqueuedUtcTime);
+
+                if (d > c) return 1;
+                else if (d == c) return 0;
+                else if (d < c) return -1;
+            });
+
+            // add device location to array
+            locs.push(devLocs[0]);
+        }
+
+        return locs;
     }
 }

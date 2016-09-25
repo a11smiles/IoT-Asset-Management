@@ -17,15 +17,19 @@ export class LocationService {
         this.headers.append('x-access-token', localStorage.getItem('token'));
     }
 
-    getLocation(): Promise<IBeacon> {
+    getLocation(uuid): Promise<IBeacon> {
         var body = JSON.stringify({ 
                         databaseId : 'messages',
                         collectionId : 'raspberry',
                         querySpec: {
-                            query: 'SELECT TOP 1 * FROM root ORDER BY root.EventEnqueuedUtcTime DESC'
+                            query: "SELECT TOP 10 * FROM root WHERE root.uuid = @uuid ORDER BY root.EventEnqueuedUtcTime DESC",
+                            parameters: [{
+                                name: '@uuid',
+                                value: uuid
+                            }]
                         } 
                     });
-        
+
         return this._http.post(Config.apiServerUrl + '/azure/docdb', body, { headers: this.headers })
                    .toPromise()
                    .then(response => response.json() as IBeacon)

@@ -23,7 +23,10 @@ export class UsersDetailComponent implements OnInit {
             let username = params['username'];
             if (!!username) {
                 this._userService.getUser(username)
-                    .then(user => this.user = user);
+                    .then(user => {
+                        this.user = user;
+                        this.user.password = null;
+                    });
             } else 
                 this.user = new User();
         });
@@ -32,9 +35,15 @@ export class UsersDetailComponent implements OnInit {
     save(): void {
         if (!!this.user._id)
             this._userService.update(this.user)
-                .then(user => this.user = user);
+                .then(user => {
+                    this.user = user;
+                    this.user.password = null;
+                });
         else
             this._userService.create(this.user)
-                .then(user => this.user = user);
+                .then(user => {
+                    this.user = user;
+                    this.user.password = null;
+                });
     }
 }
