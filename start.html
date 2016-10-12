@@ -3,7 +3,7 @@
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
 <head>
-    <title>Responsive website template for documentations</title>
+    <title>IoT Asset Management Starter Kit</title>
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,47 +38,174 @@
                     <h1 class="logo">
                         <a href="index.html">
                             <span aria-hidden="true" class="icon_documents_alt icon"></span>
-                            <span class="text-highlight">Pretty</span><span class="text-bold">Docs</span>
+                            <span class="text-highlight">IoT Asset Management</span>
                         </a>
                     </h1>
                 </div><!--//branding-->
                 <ol class="breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li class="active">Quick Start</li>
+                    <li class="active">Get Started</li>
                 </ol>
             </div><!--//container-->
         </header><!--//header-->
         <div class="doc-wrapper">
             <div class="container">
                 <div id="doc-header" class="doc-header text-center">
-                    <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Quick Start</h1>
-                    <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Jan 25th, 2016</div>
+                    <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Get Started</h1>
+                    <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Oct 12th, 2016</div>
                 </div><!--//doc-header-->
                 <div class="doc-body">
                     <div class="doc-content">
                         <div class="content-inner">
+                            <section id="purpose-section" class="doc-section">
+                                <h2 class="section-title">Purpose</h2>
+                                <div class="section-block">
+                                    <p>From the beginning of time, it seems, the community has viewed Microsoft as anti-opensource. The purpose of this project is multi-fold. The first goal was to deliver a solution by Microsoft at it's public Ignite event that was built using OpenSource technologies.  Therefore, instead of using a flavor of .NET and/or Windows IoT Core, I chose to use offerings such as Node.js, Angular 2.0 and MongoDB. 
+                                    </p>
+                                    <p>The second purpose of this project was to facilitate the adoption of Microsoft Azure by enterprise community members who were already engaged in OpenSource projects. I wished to accomplish this by demonstrating the ease of moving the applications from an environment such as Heroku to an Azure cloud platform such as Service Fabric and to swap the data repository from MongoDB to DocumentDB.  The objective was to perform these "migrations" with as little configuration changes as possible. 
+                                    </p>
+                                    <p>Finally, instead of talking about this process through concepts delivered by PowerPoint, I wanted to provide an application based on a real-world scenario. The application could be utilized by the community as a starter package in which others could contribute or use for their own projects. The scenario, in our case, is managing and tracking assets.
+                                    </p>
+                                </div>
+                            </section><!--//doc-section-->
                             <section id="download-section" class="doc-section">
                                 <h2 class="section-title">Download</h2>
                                 <div class="section-block">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec imperdiet turpis. Curabitur aliquet pulvinar ultrices. Etiam at posuere leo. Proin ultrices ex et dapibus feugiat <a href="#">link example</a> aenean purus leo, faucibus at elit vel, aliquet scelerisque dui. Etiam quis elit euismod, imperdiet augue sit amet, imperdiet odio. Aenean sem erat, hendrerit  eu gravida id, dignissim ut ante. Nam consequat porttitor libero euismod congue. 
+                                    <p>The downloadable archive has the source code for the web application and the IoT client application.
                                     </p>
-                                    <a href="http://themes.3rdwavemedia.com" class="btn btn-green" target="_blank"><i class="fa fa-download"></i> Download PrettyDocs</a>
+                                    <a href="https://github.com/a11smiles/IoT-Asset-Management/archive/master.zip" class="btn btn-green" target="_blank"><i class="fa fa-cloud-download"></i> Download Zip</a>
+                                </div>
+                            </section><!--//doc-section-->
+                            <section id="prerequisites-section" class="doc-section">
+                                <h2 class="section-title">Prerequisites</h2>
+                                <div class="section-block">
+                                    <p>While the applications may run in other environments, the demo at Ignite was based on the prerequisites for the two components or this project:
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <h5>Web Application</h5>
+                                            <ul class="list">
+                                                <li>Azure and/or Heroku</li>
+                                                <li>MongoDB and/or DocumentDB</li>
+                                                <li>Azure IoT Hub</li>
+                                                <li>Azure Stream Analytics</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <h5>Client Application</h5>
+                                            <ul class="list">
+                                                <li>Raspberry PI 3 Model B</li>
+                                                <li><a href="http://store.radiusnetworks.com/collections/all/products/radbeacon-dot" target="_blank">RadBeacon Dot</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </section><!--//doc-section-->
                             <section id="installation-section" class="doc-section">
-                                <h2 class="section-title">Installation</h2>
-                                <div id="step1"  class="section-block">
-                                    <h3 class="block-title">Step One</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.
+                                <h2 class="section-title">Installation - Basics</h2>
+                                <div class="section-block">
+                                    <p>The purpose of this section is to help you prepare the required platforms for hosting the web application and client (Raspberry Pi) application. Keep in mind that the ultimate goal of this project was to demonstrate Microsoft's adoption of OpenSource and Azure's ability to host it. Therefore, the steps below concerning MongoDB and Heroku are completely optional and are denoted as such.
+                                    </p>
+                                </div>
+                                <div id="download-source" class="section-block">
+                                    <h3 class="block-title">Download Source</h3>
+                                    <p>Download the project using git <code>git clone https://github.com/a11smiles/IoT-Asset-Management.git</code>. <br/><br/>Once the project is downloaded, there are two separate folders: 
                                     </p>
                                     <div class="code-block">
-                                        <h6>Default code example:</h6>
-                                        <p><code>bower install &lt;package&gt;</code></p>
-                                        <p><code>npm install &lt;package&gt;</code></p>
+                                        <ul class="list">
+                                        <li><code>/pi</code> - contains the client application deployed to a Raspberry Pi</li>
+                                        <li><code>/webapp</code> - the Node.js/Angular 2.0 web site</li>
+                                        </ul>
                                     </div><!--//code-block-->
                                 </div><!--//section-block-->
-                                <div id="step2"  class="section-block">
-                                    <h3 class="block-title">Step Two</h3>
+                                <div id="mongodb-setup" class="section-block">
+                                    <h3 class="block-title">MongoDB <em>(Optional)</em></h3>
+                                    <p>For demonstration purposes, I used <a href="https://mlab.com/" target="_blank">mlab.com</a> to host my sample main repository. This repository is responsible for storing application users and managed assets. If you don't currently have an available MongoDB database (including locally hosted) and would like to test it's capabilities, mlab.com is a great, <em>free</em> choice.
+                                    </p>
+                                    <p>Let's go ahead and create a sample database for our application so, first, go create a free account and confirm your email address. Now, follow the steps below to create your database and access credentials.</p>
+                                    <ol class="list">
+                                        <li>On the dashboard, click "Create New".<br /><br /><img src="assets/images/mlab-create-new.JPG" style="width:75%;" />
+                                        </li>
+                                        <li>For creating a new deployment, select a "Single-node" plan within a "Sandbox" environment.<br /><br /><img src="assets/images/mlab-sandbox-plan.JPG" style="width:65%;" />
+                                        </li>
+                                        <li>Enter a database name and click "Create new MongoDB deployment".
+                                        </li>
+                                        <li>You'll then be returned to your deployments dashboard, showing your newly created database.
+                                        </li>
+                                        <li>Click on your new database.
+                                        </li>
+                                        <li>The details page should not have any "Collections" listed for your database, obviously, because you've just created the database. We do <em>not</em> have to create one manually now as our collections will be automatically created with our first documents.
+                                        </li>
+                                        <li>We do need to create an account by which to connect to our database. NOTE: We do not connect to our database using our mlab.com account. Instead we add individual users and their role to our specific databases.
+                                        </li>
+                                        <li>Click on the "Users" tab and click "Add database user."<br /><br /><img src="assets/images/mlab-new-database-user.JPG" style="width:75%;" />
+                                        </li>
+                                        <li>In the popup dialog, enter a database username and password. Leave "Make read-only" <em>unchecked</em>.<br />
+                                        For me, I entered the following information:<br /><br />
+                                        Username: <strong>testadmin</strong><br />
+                                        Password: <strong>testpassword</strong>
+                                        </li>
+                                        <li>Once I created the user and by observing the configuration at the top of the database configuration page, I can now connect to my hosted MongoDB by using the following URI:<br /><br />
+                                            <code>mongodb://testadmin:testpassword@ds019946.mlab.com:19946/iot-assets</code><br /><br />
+                                        </li>
+                                    </ol>
+                                    <div class="callout-block callout-info">
+                                        <div class="icon-holder">
+                                            <i class="fa fa-info-circle"></i>
+                                        </div><!--//icon-holder-->
+                                        <div class="content">
+                                            <h4 class="callout-title">NOTE</h4>
+                                            <p>Your URI may be different depending on what you used for your username, password, database name and the hostname for the machine that's hosting your database. But, it should look similar to mine.</p>
+                                        </div><!--//content-->
+                                    </div>
+                                </div><!--//section-block-->
+                                <div id="heroku-setup" class="section-block">
+                                    <h3 class="block-title">Heroku <em>(Optional)</em></h3>
+                                    <p>As many enterprises are regularly using <a href="http://heroku.com" target="_blank">Heroku</a> for hosting their Node.js applications, I, again, wanted to do the same. As stated earlier, this step is optional.
+                                    </p>
+                                    <p>In order to host our application we'll need to create an "app" in Heroku so, first, go create a free account and confirm your email address. Now, follow the steps below to setup the hosting environment for our Node.js application.</p>
+                                    <ol class="list">
+                                        <li>On the dashboard, click "New", then "Create new app".<br /><br /><img src="assets/images/heroku-create-app.JPG" />
+                                        </li>
+                                        <li>Give your application a name and click "Create App".
+                                        </li>
+                                    </ol>
+                                    <div class="callout-block callout-info">
+                                        <div class="icon-holder">
+                                            <i class="fa fa-info-circle"></i>
+                                        </div><!--//icon-holder-->
+                                        <div class="content">
+                                            <h4 class="callout-title">NOTE</h4>
+                                            <p>Whatever you name your application will be the hostname within your app's URI. (i.e. http://<em>my-app-name</em>.herokuapp.com)</p>
+                                        </div><!--//content-->
+                                    </div>
+                                </div><!--//section-block-->
+                                <div id="azure-documentdb" class="section-block">
+                                    <h3 class="block-title">Azure DocumentDB</h3>
+                                    <p>DocumentDB is Microsoft Azure's NoSQL database platform. It will serve two purposes within our application. 
+                                    </p>
+                                    <p>First, DocumentDB, if we choose to use it instead of MongoDB, will serve as our main repository to hold our application's users and assets.  Because Microsoft Azure provides a MongoDB connector for DocumentDB, it is very easy to switch between the two databases.
+                                    </p>
+                                    <p>DocumentDB will also be the repository that holds all of our location data for our Bluetooth LE (RadBeacon) devices. Azure's IoT Hub coupled with Stream Analytics will pass the data into DocumentDB.
+                                    </p>
+                                    <div class="callout-block callout-danger">
+                                        <div class="icon-holder">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                        </div><!--//icon-holder-->
+                                        <div class="content">
+                                            <h4 class="callout-title">MongoDB Connector for DocumentDB</h4>
+                                            <p>Currently, the MongoDB connector for Azure's DocumentDB is in preview. Thus, there is some reduced functionality by using DocumentDB for the main database. This can affect performance and security. Until the connector has greater compatibility and enters "General Availability," it is recommended that MongoDB is used for the main repository. 
+                                            </p>
+                                        </div><!--//content-->
+                                    </div>
+                                    <p>If you haven't done so already, create an Azure account at <a href="https://azure.microsoft.com/en-us/" target="_blank">https://azure.microsoft.com/en-us/</a>. Then, login to your portal to begin.
+                                    </p>
+                                </div><!--//section-block-->
+                            </section>
+                            <section id="raspberry-section" class="doc-section">
+                                <h2 class="section-title">Installation - Raspberry Pi</h2>
+                                <div id="raspberry-setup"  class="section-block">
+                                    <h3 class="block-title">Raspberry Pi Setup</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
                                     </p>
                                     <div class="row">
@@ -499,12 +626,22 @@ echo $y;
                     <div class="doc-sidebar hidden-xs">
                         <nav id="doc-nav">
                             <ul id="doc-menu" class="nav doc-menu" data-spy="affix">
+                                <li><a class="scrollto" href="#purpose-section">Purpose</a></li>
                                 <li><a class="scrollto" href="#download-section">Download</a></li>
+                                <li><a class="scrollto" href="#prerequisites-section">Prerequisites</a></li>
                                 <li>
-                                    <a class="scrollto" href="#installation-section">Installation</a>
+                                    <a class="scrollto" href="#installation-section">Installation - Basics</a>
                                     <ul class="nav doc-sub-menu">
-                                        <li><a class="scrollto" href="#step1">Step One</a></li>
-                                        <li><a class="scrollto" href="#step2">Step Two</a></li>
+                                        <li><a class="scrollto" href="#download-source">Download Source</a></li>
+                                        <li><a class="scrollto" href="#mongodb-setup">MongoDB</a></li>
+                                        <li><a class="scrollto" href="#heroku-setup">Heroku</a></li>
+                                        <li><a class="scrollto" href="#azure-documentdb">Azure DocumentDB</a></li>
+                                    </ul><!--//nav-->
+                                </li>
+                                <li>
+                                    <a class="scrollto" href="#raspberry-section">Installation - Raspberry Pi</a>
+                                    <ul class="nav doc-sub-menu">
+                                        <li><a class="scrollto" href="#download-source">Download Source</a></li>
                                         <li><a class="scrollto" href="#step3">Step Three</a></li>
                                     </ul><!--//nav-->
                                 </li>
@@ -565,7 +702,7 @@ echo $y;
     <footer id="footer" class="footer text-center">
         <div class="container">
             <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can check out other license options via our website: themes.3rdwavemedia.com */-->
-            <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="http://themes.3rdwavemedia.com/" targe="_blank">Xiaoying Riley</a> for developers</small>
+            <small class="copyright">Template designed with <i class="fa fa-heart"></i> by <a href="http://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for developers</small>
             
         </div><!--//container-->
     </footer><!--//footer-->
