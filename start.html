@@ -60,7 +60,7 @@
                             <section id="purpose-section" class="doc-section">
                                 <h2 class="section-title">Purpose</h2>
                                 <div class="section-block">
-                                    <p>From the beginning of time, it seems, the community has viewed Microsoft as anti-OpenSource. The purpose of this project is multi-fold. The first goal was to deliver a solution by Microsoft at it's public Ignite event that was built using OpenSource technologies.  Therefore, instead of using a flavor of .NET and/or Windows IoT Core, I chose to use offerings such as Node.js, Angular 2.0 and MongoDB. 
+                                    <p>From the beginning of time, it seems, the community has viewed Microsoft as anti-OpenSource. The purpose of this project is multi-fold. The first goal was to deliver a solution by Microsoft at it's public Ignite event that was built using OpenSource technologies.  Therefore, instead of using some flavor of .NET and/or Windows IoT Core, I chose to use offerings such as Node.js, Angular 2.0 and MongoDB. 
                                     </p>
                                     <p>The second purpose of this project was to facilitate the adoption of Microsoft Azure by enterprise community members who were already engaged in OpenSource projects. I wished to accomplish this by demonstrating the ease of moving the applications from an environment such as Heroku to an Azure cloud platform such as Service Fabric and to swap the data repository from MongoDB to DocumentDB.  The objective was to perform these "migrations" with as little configuration changes as possible. 
                                     </p>
@@ -194,11 +194,103 @@
                                         </div><!--//icon-holder-->
                                         <div class="content">
                                             <h4 class="callout-title">MongoDB Connector for DocumentDB</h4>
-                                            <p>Currently, the MongoDB connector for Azure's DocumentDB is in preview. Thus, there is some reduced functionality by using DocumentDB for the main database. This can affect performance and security. Until the connector has greater compatibility and enters "General Availability," it is recommended that MongoDB is used for the main repository. 
+                                            <p>Currently, the MongoDB connector for Azure's DocumentDB is in preview. Thus, there is some reduced functionality by using DocumentDB for the <em>main</em> database. This can affect performance and security. Until the connector has greater compatibility and enters "General Availability," it is recommended that MongoDB is used for the main repository. 
                                             </p>
                                         </div><!--//content-->
                                     </div>
                                     <p>If you haven't done so already, create an Azure account at <a href="https://azure.microsoft.com/" target="_blank">https://azure.microsoft.com/</a>. Then, login to your portal to begin.
+                                    </p>
+                                    <ol class="list">
+                                        <li>Once you've logged into your Azure portal, on the left you will find see a menu (it could be collapsed). Click on the <img src="assets/images/azure-new-plus.JPG" style="width:25px;" /> to create a new resource.</li>
+                                        <li>In the "<em>Search the marketplace</em>" box, search for <strong>DocumentDB</strong>. You will be presented with two options in the search assist as you see in the below image.<br /><br />
+                                            <img src="assets/images/documentDB-search.jpg" style="width:235px;" />
+                                        </li>
+                                    </ol>
+                                    <div class="callout-block callout-info">
+                                        <div class="icon-holder">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                        </div><!--//icon-holder-->
+                                        <div class="content">
+                                            <h4 class="callout-title">DocumentDB vs. DocumentDB - Protocol Support for MongoDB</h4>
+                                            <p>As stated in the above warning, DocumentDB - <em>Protocol Support for MongoDB</em> offers support to use DocumentDB with native MongoDB client libraries.  If you'd like to use DocumentDB for the primary repository - or even test its functionality - then you'll need to create a DocumentDB with support for the MongoDB protocol. If you'd prefer to stick with MongoDB as the primary repository, then choose DocumentDB without support for the MondDB.  Below are the options for each type of DocumentDB repository.
+                                            </p>
+                                        </div><!--//content-->
+                                    </div>
+                                    <h6>DocumentDB - IoT Repository Only</h6>
+                                    <p>Follow these steps to set up the repository that is only used by the reporting IoT devices.
+                                    </p>
+                                    <ol class="list">
+                                        <li>Select "DocumentDB (NoSQL)". <em>NOTE: You may have to choose this twice.</em></li>
+                                        <li>In the resulting pane, click "Create"</li>
+                                        <li>You'll then need to complete the template options to configure your DocumentDB instance.
+                                            <ul class="list">
+                                                <li><strong>ID</strong> - A globally unique name that defines your DocumentDB's namespace (URL).</li>
+                                                <li><strong>NoSQL API</strong> - Choose "DocumentDB"</li>
+                                               <li><strong>Subscription</strong> - Choose an active Azure subscription</li>
+                                                <li><strong>Resource Group</strong> - Choose to either create a new resource group or select a pre-existing one</li>
+                                                <li><strong>Location</strong> - Choose a location that's closest to you.</li>
+                                            </ul>
+                                        </li>
+                                        <li>Click "Create"</li>
+                                    </ol>
+                                    <br />
+                                    <h6>DocumentDB - IoT &amp; Primary Repository</h6>
+                                    <p>You should only follow these instructions if you wish the test DocumentDB's support for the MongoDB protocol for the application's primary repository.
+                                    </p>
+                                    <ol class="list">
+                                        <li>Select "DocumentDB (NoSQL) - Protocol Support for MongoDB". <em>NOTE: You may have to choose this twice.</em></li>
+                                        <li>In the resulting pane, click "Create"</li>
+                                        <li>You'll then need to complete the template options to configure your DocumentDB instance.
+                                            <ul class="list">
+                                                <li><strong>ID</strong> - A globally unique name that defines your DocumentDB's namespace (URL).</li>
+                                                <li><strong>NoSQL API</strong> <em>(if available)</em> - Choose "MongoDB".</li>
+                                                <li><strong>Subscription</strong> - Choose an active Azure subscription.</li>
+                                                <li><strong>Resource Group</strong> - Choose to either create a new resource group or select a pre-existing one.</li>
+                                                <li><strong>Location</strong> - Choose a location that's closest to you.</li>
+                                            </ul>
+                                        </li>
+                                        <li>Click "Create"</li>
+                                    </ol>
+                                </div><!--//section-block-->
+                                <div id="documentdb-collections" class="section-block">
+                                    <h3>DocumentDB Collections</h3>
+                                    <p>The DocumentDB database you created in the previous section will host our various document collections.
+                                    </p>
+                                    <br />
+                                    <h6>Pi Messages Collection</h6>
+                                    <p>The Pi Messages collection is responsible for storing all of our incoming messages (i.e. bluetooth beacon locations) from our Raspberry Pi's.</p>
+                                    <ol class="list">
+                                        <li>In Azure, open your DocumentDB pane.<br /><br />
+                                            <img src="assets/images/iot-assets-documentdb.JPG" style="width:75%;" />
+                                        </li>
+                                        <li>In the top of the pane, click on "Add Collection"</li>
+                                        <li>In the Add Collection pane, enter the following information:
+                                            <ul class="list>">
+                                                <li><strong>Collection Id</strong> - The name of your document collection.  Enter <strong>raspberry</strong>.</li>
+                                                <li><strong>Pricing Tier</strong> - Choose a pricing tier for your collection.  In production, this will need to be pretty high in order to have the ability to process and store incoming messages.  In test, you can choose a smaller instance size. </li>
+                                                <li><strong>Database</strong> - Choose "Create New" and enter <strong>messages</strong>.</li>
+                                            </ul>
+                                        </li>
+                                        <li>Click "OK"</li>
+                                    </ol>
+                                    <p>You now have the messages document repository created.
+                                    </p>
+                                    <br />
+                                    <h6>Web Application Collection <em>(Optional)</em></h6>
+                                    <p>The web application collection is optional and should only be used if you 1) do not wish to use MongoDB as your main repository; and 2) you've created your DocumentDB with the MongoDB protocol option.</p>
+                                    <ol class="list">
+                                        <li>In Azure, open your DocumentDB pane.</li>
+                                        <li>In the top of the pane, click on "Add Collection"</li>
+                                        <li>In the Add Collection pane, enter the following information:
+                                            <ul class="list>">
+                                                <li><strong>Collection Id</strong> - The name of your document collection.  Enter <strong>assets</strong>.</li>
+                                                <li><strong>Pricing Tier</strong> - Choose a pricing tier for your collection.  This isn't a high performing database, so a smaller instance is sufficient.</li>
+                                                <li><strong>Database</strong> - Choose "Create New" and enter <strong>app</strong>.</li>
+                                            </ul>
+                                        </li>
+                                        <li>Click "OK"</li>
+                                    </ol>
+                                    <p>Repeat the above steps to create also collection with an ID of <strong>users</strong> and use the database you just created, named <strong>app</strong>.
                                     </p>
                                 </div><!--//section-block-->
                             </section>
@@ -636,6 +728,7 @@ echo $y;
                                         <li><a class="scrollto" href="#mongodb-setup">MongoDB</a></li>
                                         <li><a class="scrollto" href="#heroku-setup">Heroku</a></li>
                                         <li><a class="scrollto" href="#azure-documentdb">Azure DocumentDB</a></li>
+                                        <li><a class="scrollto" href="#documentdb-collections">DocumentDB Collections</a></li>
                                     </ul><!--//nav-->
                                 </li>
                                 <li>
