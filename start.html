@@ -71,9 +71,19 @@
                             <section id="download-section" class="doc-section">
                                 <h2 class="section-title">Download</h2>
                                 <div class="section-block">
-                                    <p>The downloadable archive has the source code for the web application and the IoT client application.
+                                    <p>There are two downloads options available. 
                                     </p>
-                                    <a href="https://github.com/a11smiles/IoT-Asset-Management/archive/master.zip" class="btn btn-green" target="_blank"><i class="fa fa-cloud-download"></i> Download Zip</a>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <h6>Complete Source</h6>
+                                        <p style="padding-bottom:90px;">The downloadable archive has the source code for the web application and the IoT client application.</p>
+                                        <a href="https://github.com/a11smiles/IoT-Asset-Management/archive/master.zip" class="btn btn-green" target="_blank"><i class="fa fa-cloud-download"></i> Download Zip</a>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <h6>Raspbian Only</h6>
+                                        <p>The Raspbian image is a pre-configured, 2GB image for the Raspberry Pi 3 Model B.<br /><br />Note: The image requires <code>Win32DiskImager</code> which can be found <a href="http://sourceforge.net/projects/win32diskimager/" target="_blank">here</a>. Imaging instructions can be found on the Raspberry Pi <a href="https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" target="_blank">website</a>.</p>
+                                        <a href="https://github.com/a11smiles/IoT-Asset-Management/archive/master.zip" class="btn btn-green" target="_blank"><i class="fa fa-cloud-download"></i> Download Raspbian Image</a>
+                                    </div>
+                                    <p>&nbsp;</p>
                                 </div>
                             </section><!--//doc-section-->
                             <section id="prerequisites-section" class="doc-section">
@@ -85,7 +95,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <h5>Web Application</h5>
                                             <ul class="list">
-                                                <li>Azure and/or Heroku</li>
+                                                <li>Heroku (and/or Azure)</li>
                                                 <li>MongoDB and/or DocumentDB</li>
                                                 <li>Azure IoT Hub</li>
                                                 <li>Azure Stream Analytics</li>
@@ -226,7 +236,7 @@
                                             <ul class="list">
                                                 <li><strong>ID</strong> - A globally unique name that defines your DocumentDB's namespace (URL).</li>
                                                 <li><strong>NoSQL API</strong> - Choose "DocumentDB"</li>
-                                               <li><strong>Subscription</strong> - Choose an active Azure subscription</li>
+                                                <li><strong>Subscription</strong> - Choose an active Azure subscription</li>
                                                 <li><strong>Resource Group</strong> - Choose to either create a new resource group or select a pre-existing one</li>
                                                 <li><strong>Location</strong> - Choose a location that's closest to you.</li>
                                             </ul>
@@ -291,6 +301,16 @@
                                         <li>Click "OK"</li>
                                     </ol>
                                     <p>Repeat the above steps to create also collection with an ID of <strong>users</strong> and use the database you just created, named <strong>app</strong>.
+                                    </p>
+                                </div><!--//section-block-->
+                                <div id="iot-hub" class="section-block">
+                                    <h3>IoT Hub</h3>
+                                    <p>The DocumentDB database you created in the previous section will host our various document collections.
+                                    </p>
+                                </div><!--//section-block-->
+                                <div id="stream-analytics" class="section-block">
+                                    <h3>Stream Analytics</h3>
+                                    <p>The DocumentDB database you created in the previous section will host our various document collections.
                                     </p>
                                 </div><!--//section-block-->
                             </section>
@@ -736,28 +756,26 @@ echo $y;
                                 <li>
                                     <a class="scrollto" href="#raspberry-section">Installation - Raspberry Pi</a>
                                     <ul class="nav doc-sub-menu">
-                                        <li><a class="scrollto" href="#download-source-pi">Download Source</a></li>
-                                        <li><a class="scrollto" href="#step3">Step Three</a></li>
+                                        <li><a class="scrollto" href="#node">Node and NPM</a></li>
+                                        <li><a class="scrollto" href="#ibeacon">iBeacon Location Packages</a></li>
+                                        <li><a class="scrollto" href="#bluez">Bluez Libraries</a></li>
                                     </ul><!--//nav-->
                                 </li>
                                 <li>
-                                    <a class="scrollto" href="#code-section">Code</a>
+                                    <a class="scrollto" href="#configuration-section">Configuration</a>
                                     <ul class="nav doc-sub-menu">
-                                        <li><a class="scrollto" href="#html">HTML</a></li>
-                                        <li><a class="scrollto" href="#css">CSS</a></li>
-                                        <li><a class="scrollto" href="#less">LESS</a></li>
-                                        <li><a class="scrollto" href="#sass">Sass</a></li>
-                                        <li><a class="scrollto" href="#javascript">JavaScript</a></li>
-                                        <li><a class="scrollto" href="#python">Python</a></li>
-                                        <li><a class="scrollto" href="#php">PHP</a></li>
-                                        <li><a class="scrollto" href="#handlebars">Handlebars</a></li>
+                                        <li><a class="scrollto" href="#website-config">Website</a></li>
+                                        <li><a class="scrollto" href="#pi-config">Raspberry Pi</a></li>
+                                        <li><a class="scrollto" href="#ibeacon-config">iBeacon(s)</a></li>
                                     </ul><!--//nav-->
                                 </li>
-                                <li><a class="scrollto" href="#callouts-section">Callouts</a></li>
-                                <li><a class="scrollto" href="#tables-section">Tables</a></li>
-                                <li><a class="scrollto" href="#buttons-section">Buttons</a></li>
-                                <li><a class="scrollto" href="#video-section">Video</a></li>
-                                <li><a class="scrollto" href="#icons-section">Icons</a></li>
+                                <li>
+                                    <a class="scrollto" href="#deployment-section">Deployment &amp; Last Steps</a>
+                                    <ul class="nav doc-sub-menu">
+                                        <li><a class="scrollto" href="#heroku-deploy">Heroku</a></li>
+                                        <li><a class="scrollto" href="#ibeacon-monitoring">iBeacon Monitoring</a></li>
+                                    </ul><!--//nav-->
+                                </li>                                
                             </ul><!--//doc-menu-->
                         </nav>
                     </div><!--//doc-sidebar-->
