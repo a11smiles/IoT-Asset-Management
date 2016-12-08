@@ -305,60 +305,259 @@
                                 </div><!--//section-block-->
                                 <div id="iot-hub" class="section-block">
                                     <h3>IoT Hub</h3>
-                                    <p>The DocumentDB database you created in the previous section will host our various document collections.
+                                    <p>The IoT Hub serves as the receiving endpoint for all incoming messages from the Pi.  Unlike a typical web service, with IoT Hub, things like scalability and failover are baked in.  IoT Hub can handle 100,000+ requests/sec.
                                     </p>
+                                    <ol class="list">
+                                        <li>In Azure, create a new IoT Hub resource.</li>
+                                        <li>In the add IoT Hub pane, enter a name for your IoT Hub (e.g. NodeHub).</li>
+                                        <li>With the exception of the Resource Group and Location, you can accept the defaults. This tutorial won't cover the details regarding scaling, units and partitions.</li>
+                                        <li>Click "Create"</li> 
+                                    </ol>
+                                    <p>It may take a little bit to create the IoT Hub, so be patient.<br /><br />Once the IoT Hub creation process has finished, we need to define an access policy so that our Stream Analytics job can connect and read data.</p>
+                                    <ol class="list">
+                                        <li>While in the Iot Hub pane (open it if it's not open already), click on "Shared access policies".</li>
+                                        <li>In the Shared access policies pane, click "Add" on the top menu.</li>
+                                        <li>Name the access policy (e.g. iothubowner) and check <em>all four</em> permissions.</li>
+                                        <li>Click "Create".</li>
+                                    </ol>
                                 </div><!--//section-block-->
                                 <div id="stream-analytics" class="section-block">
                                     <h3>Stream Analytics</h3>
-                                    <p>The DocumentDB database you created in the previous section will host our various document collections.
+                                    <p>Stream analytics acts as a middleware processor for our data.  It, itself, really doesn't do anything to our data.  Instead, it relies on other functionality within Azure.  Stream analytics simply gives us the mechanism to "hook up" Azure components to our middleware.
                                     </p>
+                                    <ol class="list">
+                                        <li>In Azure, create a new Stream Analytics Job resource.</li>
+                                        <li>From a creation perspective, the only things required are a name (e.g. iot-assets) and the resource group/location.  Go ahead and fill those in.</li>
+                                        <li>Click "Create" when finished.</li>
+                                    </ol>
+                                    <p>As with the IoT Hub, it may take a few minutes to create the Stream Analytics job. Once it has been created, we need to wire the necessary Azure features into the pipeline. There are three major parts to this exercise: 1) the <strong>Inputs</strong>; 2) the <strong>Query</strong>; and, 3) the <strong>Outputs</strong>. See the below image.<br />
+                                    <img src="assets/images/iot-assets-stream-analytics.JPG" style="width:75%;margin:20px auto;" /><br /> Let's configure each one of these. Before we begin, make sure that your job isn't running.  It shouldn't be because we've not yet defined inputs and outputs, but verify in case you've already completed these steps and you're attempting the modify the settings. Also, we'll need to configure the inputs and outputs first before we complete the query.</p>
+                                    <br />
+                                    <h6>Inputs</h6>
+                                    <ol class="list">
+                                        <li>While in the Stream Analytics job pane, click on "Inputs" in the either the side menu or the tile.</li> 
+                                        <li>In the Input pane, click "Add" on the top menu.</li>
+                                        <li>For the new input:
+                                            <ul class="list">
+                                                <li>Enter an alias (e.g. iot-hub-input)</li>
+                                                <li><strong>Source Type</strong> - Data stream</li>
+                                                <li><strong>Source</strong> - IoT hub</li>
+                                                <li><strong>Subscription</strong> - your subscription</li>
+                                                <li><strong>IoT Hub</strong> - NodeHub (or whatever you named it above)</li>
+                                                <li><strong>Endpoint</strong> - Messaging</li>
+                                                <li><strong>Shared access policy name</strong> - iothubowner (or whatever you named it above)</li>
+                                                <li><strong>Consumer group</strong> - $Default</li>
+                                                <li><strong>Event serialization format</strong> - JSON</li>
+                                                <li><strong>UTF-8</strong></li>
+                                            </ul></li>
+                                        <li>Click "Create"</li>
+                                    </ol>
+                                    <br />
+                                    <h6>Outputs</h6>
+                                    <ol class="list">
+                                        <li>While in the Stream Analytics job pane, click on "Outputs" in the either the side menu or the tile.</li> 
+                                        <li>In the Input pane, click "Add" on the top menu.</li>
+                                        <li>For the new input:
+                                            <ul class="list">
+                                                <li>Enter an alias (e.g. docdb-output)</li>
+                                                <li><strong>Sink</strong> - DocumentDB</li>
+                                                <li><strong>Subscription</strong> - your subscription</li>
+                                                <li><strong>Account id</strong> - iot-assets (or whatever you named it above)</li>
+                                                <li><strong>Database</strong> - messages (or whatever you named it above)</li>
+                                                <li><strong>Collection name pattern</strong> - raspberry</li>
+                                                <li><strong>Document id</strong> - <em>***leave blank***</em></li>
+                                            </ul></li>
+                                        <li>Click "Create"</li>
+                                    </ol>
+                                    <br />
+                                    <h6>Query</h6>
+                                    <ol class="list">
+                                        <li>While in the Stream Analytics job pane, click on "Query" in the either the side menu or the tile.</li> 
+                                        <li>In the query editor pane, enter the following:<br /><br />
+                                            <pre><code>SELECT
+    *
+INTO
+    [docdb-output]
+FROM
+    [iot-hub-input]
+                                            </code></pre>
+                                        </li>
+                                        <li>Click "Save" on the top menu and close the pane.</li>
+                                    </ol>
+                                    <br />
+                                    <p>You can now start the Stream Analytics job by clicking on "<strong>Start</strong>" on the Stream Analytics pane.</p>
                                 </div><!--//section-block-->
                             </section>
                             <section id="raspberry-section" class="doc-section">
                                 <h2 class="section-title">Installation - Raspberry Pi</h2>
-                                <div id="raspberry-setup"  class="section-block">
-                                    <h3 class="block-title">Raspberry Pi Setup</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+                                <div class="section-block">
+                                    <p>This section is to assist you with setting up and configuring your Raspbian Pi. The setup is based on a Raspberry Pi 3 Model B.  If you downloaded the pre-configured image from above (e.g. not building from a virgin Raspbian Pi image), then you may skip this section and move to the <a href="#configuration-section">configuration section</a> for the actual client applications.
                                     </p>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <h6>Un-ordered list example</h6>
-                                            <ul class="list">
-        										<li>Lorem ipsum dolor sit amet.</li>
-        										<li>Aliquam tincidunt mauris.</li>
-        										<li>Ultricies eget vel aliquam libero.
-        											<ul>
-        												<li>Turpis pulvinar</li>
-        												<li>Feugiat scelerisque</li>
-        												<li>Ut tincidunt</li>
-        											</ul>
-        										</li>
-        										<li>Pellentesque habitant morbi.</li>
-        										<li>Praesent dapibus, neque id.</li>
-        									</ul>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <h6>Ordered list example</h6>
-                                            <ol class="list">
-        										<li>Lorem ipsum dolor sit amet.</li>
-        										<li>Aliquam tincidunt mauris.</li>
-        										<li>Ultricies eget vel aliquam libero.
-        											<ul>
-        												<li>Turpis pulvinar</li>
-        												<li>Feugiat scelerisque</li>
-        												<li>Ut tincidunt</li>
-        											</ul>
-        										</li>
-        										<li>Pellentesque habitant morbi.</li>
-        										<li>Praesent dapibus, neque id.</li>
-        									</ol>
-                                        </div>
-                                    </div><!--//row-->
                                 </div><!--//section-block-->
-                                <div id="step3"  class="section-block">
-                                    <h3 class="block-title">Step Three</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.
+                                <div id="node"  class="section-block">
+                                    <h3 class="block-title">Node and NPM</h3>
+                                    <p>The Raspbian Jessie image comes pre-installed with Node v0.10.29.  However, NPM is not installed.  In order to download dependencies, we're going to need to: 1) upgrade Node; and, 2) install NPM.
                                     </p>
+                                    <ol class="list">
+                                        <li>Download package lists to check for available upgrades<br /><br /><code>sudo apt update</code><br /><br /></li>
+                                        <li>Install Node (v4.5.0) and NPM (v2.15.19)<br /><br />
+                                            <code>
+                                                wget https://nodejs.org/dist/v4.5.0/node-v4.5.0-linux-armv7l.tar.gz<br />
+                                                sudo mv node-v4.5.0-linux-armv7l.tar.gz /opt<br />
+                                                cd /opt<br />
+                                                sudo tar -xzf node-v4.5.0-linux-arm7l.tar.gz<br />
+                                                sudo mv node-v4.5.0-linux-arm7l nodejs<br />
+                                                sudo rm node-v4.5.0-linux-arm7l.tar.gz<br />
+                                                sudo rm /usr/bin/node<br />
+                                                sudo ln -s /opt/nodejs/bin/node /usr/bin/node<br />
+                                                sudo ln -s /opt/nodejs/bin/npm /usr/bin/npm
+                                            </code>
+                                        </li>
+                                    </ol>
+                                </div><!--//section-block-->
+                                <div id="ibeacon"  class="section-block">
+                                    <h3 class="block-title">iBeacon Location Packages</h3>
+                                    <p>The iBeacon location packages allows your Pi to communicate with iBeacon devices and understand their specific payload. 
+                                    </p>
+                                    <code>sudo apt-get install bluez-hcidump</code>
+                                </div><!--//section-block-->
+                                <div id="bluez"  class="section-block">
+                                    <h3 class="block-title">Bluez Libraries</h3>
+                                    <p>The Bluez libraries are a dependency library written in C++ that provides connectivity to Bluetooth LE (low-energy) devices.
+                                    </p>
+                                    <ol class="list">
+                                        <li>Install Dependencies<br /><br />
+                                            <code>
+                                                sudo apt-get install -y libusb-dev libdbus-1-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev
+                                            </code><br /><br />
+                                        </li>
+                                        <li>Download Libraries<br /><br />
+                                            <code>
+                                                wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.41.tar.xz<br />
+                                                sudo tar -xvf bluez-5.41.tar.xz<br />
+                                                cd bluez-5.41
+                                            </code><br /><br />
+                                        </li>
+                                        <li>Compile &amp; Install<br /><br />
+                                            <code>
+                                                ./configure<br />
+                                                make<br />
+                                                sudo make install<br />
+                                            </code><br /><br />
+                                        </li>
+                                        <li>Setup Bluez Service<br /><br />
+                                            <code>
+                                                systemctl status bluetooth
+                                            </code><br /><br />
+                                            You'll likely see the bluez service is loaded but not active:<br /><br />
+                                            <code>
+                                                ● bluetooth.service - Bluetooth service<br />
+                                                &nbsp;&nbsp;&nbsp;Loaded: loaded (/lib/systemd/system/bluetooth.service; disabled)<br />
+                                                &nbsp;&nbsp;&nbsp;Active: inactive (dead)<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Docs: man:bluetoothd(8)
+                                            </code><br /><br />
+                                            You can manually start the bluez service by running the following command:<br /><br />
+                                            <code>
+                                                sudo systemctl start bluetooth
+                                            </code><br /><br />
+                                            After running the above, run the status command again and you should see the service is now active:<br /><br />
+                                            <code>
+                                                ● bluetooth.service - Bluetooth service<br />
+                                                &nbsp;&nbsp;&nbsp;Loaded: loaded (/lib/systemd/system/bluetooth.service; disabled)<br />
+                                                &nbsp;&nbsp;&nbsp;Active: active (running) since Mon 2016-02-29 04:56:27 UTC; 1s ago<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Docs: man:bluetoothd(8)<br />
+                                                &nbsp;Main PID: 715 (bluetoothd)<br />
+                                                &nbsp;&nbsp;&nbsp;Status: "Running"<br />
+                                                &nbsp;&nbsp;&nbsp;CGroup: /system.slice/bluetooth.service<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─715 /usr/local/libexec/bluetooth/bluetoothd
+                                            </code><br /><br />
+                                            You can stop the service by running:<br /><br />
+                                            <code>
+                                                sudo systemctl start bluetooth
+                                            </code><br /><br />
+                                        </li>
+                                    </ol>
+                                    <div class="callout-block callout-info">
+                                        <div class="icon-holder">
+                                            <i class="fa fa-info-circle"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h4 class="callout-title">Automatically Starting the Bluetooth Service on Boot</h4>
+                                            If you want the bluez serice to run automatically when the Raspberry Pi boots.  To enable the bluez service to run at boot, execute the following command:<br /><br />
+                                            <code>
+                                                sudo systemctl enable bluetooth
+                                            </code><br /><br />
+                                            If you ever need to disable it, substitute <code>enable</code> with <code>disable</code> on the previous command.
+                                        </div>
+                                    </div>
+                                </div><!--//section-block-->
+                                <div id="enable-bluetooth-le"  class="section-block">
+                                    <h3 class="block-title">Enable Bluetooth LE</h3>
+                                    <p>The final step to installation is enable the bluetooth low energy features in bluez.  These features are disabled by default because they are still under development and have been placed behind an experimental flag.
+                                    </p>
+                                    <ol class="list">
+                                        <li>To enable the bluez experimental features like LE, you need to modify the service configuration.<br /><br /><code>sudo nano /lib/systemd/system/bluetooth.service</code><br /><br /></li>
+                                        <li>You should see a configuration file similary to the following:<br /><br />
+                                            <code>
+                                                [Unit]<br />
+                                                Description=Bluetooth service<br />
+                                                Documentation=man:bluetoothd(8)<br />
+                                                ConditionPathIsDirectory=/sys/class/bluetooth<br />
+<br />
+                                                [Service]<br />
+                                                Type=dbus<br />
+                                                BusName=org.bluez<br />
+                                                ExecStart=/usr/local/libexec/bluetooth/bluetoothd   <br />            
+                                                NotifyAccess=main<br />
+                                                #WatchdogSec=10<br />
+                                                #Restart=on-failure<br />
+                                                CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE<br />
+                                                LimitNPROC=1<br />
+<br />
+                                                [Install]<br />
+                                                WantedBy=bluetooth.target<br />
+                                                Alias=dbus-org.bluez.service<br />
+                                            </code><br /><br />
+                                        </li>
+                                        <li>To enable the experimental features, add <strong>--experimental</strong> to the ExecStart line:<br /><br />
+                                            <code>
+                                                [Unit]<br />
+                                                Description=Bluetooth service<br />
+                                                Documentation=man:bluetoothd(8)<br />
+                                                ConditionPathIsDirectory=/sys/class/bluetooth<br />
+<br />
+                                                [Service]<br />
+                                                Type=dbus<br />
+                                                BusName=org.bluez<br />
+                                                ExecStart=/usr/local/libexec/bluetooth/bluetoothd <span style="color:lightgreen;">--experimental</span><br />            
+                                                NotifyAccess=main<br />
+                                                #WatchdogSec=10<br />
+                                                #Restart=on-failure<br />
+                                                CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE<br />
+                                                LimitNPROC=1<br />
+<br />
+                                                [Install]<br />
+                                                WantedBy=bluetooth.target<br />
+                                                Alias=dbus-org.bluez.service<br />                                                
+                                            </code><br /><br />
+                                        </li>
+                                        <li>Save the file and exit the editor by pressing <strong>Ctrl-o, enter,</strong> then <strong>Ctrl-x</strong>.</li>
+                                        <li>Now tell systemd to reload its configuration files by running:<br /><br /><code>sudo systemctl daemon-reload</code><br /><br /></li>
+                                        <li>If the bluez service was previously running, you'll want to restart it by running:<br /><br /><code>sudo systemctl restart bluetooth</code><br /><br />
+                                        Or, if the service wasn't running you can start it with the command above.</li>
+                                        <li>Once the bluez service is running, you can check that the experimental features are enabled by running the status command again. This time, you should see the <strong>--experimental</strong> flag set on the service:<br /><br />
+                                            <code>
+                                                ● bluetooth.service - Bluetooth service<br />
+                                                &nbsp;&nbsp;&nbsp;Loaded: loaded (/lib/systemd/system/bluetooth.service; disabled)<br />
+                                                &nbsp;&nbsp;&nbsp;Active: active (running) since Mon 2016-02-29 04:56:27 UTC; 1s ago<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Docs: man:bluetoothd(8)<br />
+                                                &nbsp;Main PID: 715 (bluetoothd)<br />
+                                                &nbsp;&nbsp;&nbsp;Status: "Running"<br />
+                                                &nbsp;&nbsp;&nbsp;CGroup: /system.slice/bluetooth.service<br />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─715 /usr/local/libexec/bluetooth/bluetoothd --experimental
+                                            </code><br /><br />   
+                                        </li>                                            
+                                    </ol>
                                 </div><!--//section-block-->
                             </section><!--//doc-section-->
                             
@@ -759,6 +958,7 @@ echo $y;
                                         <li><a class="scrollto" href="#node">Node and NPM</a></li>
                                         <li><a class="scrollto" href="#ibeacon">iBeacon Location Packages</a></li>
                                         <li><a class="scrollto" href="#bluez">Bluez Libraries</a></li>
+                                        <li><a class="scrollto" href="#enable-bluetooth-le">Enable Bluetooth LE</a></li>
                                     </ul><!--//nav-->
                                 </li>
                                 <li>
