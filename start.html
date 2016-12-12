@@ -52,7 +52,7 @@
             <div class="container">
                 <div id="doc-header" class="doc-header text-center">
                     <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Get Started</h1>
-                    <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Oct 12th, 2016</div>
+                    <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Dec 12th, 2016</div>
                 </div><!--//doc-header-->
                 <div class="doc-body">
                     <div class="doc-content">
@@ -560,7 +560,95 @@ FROM
                                     </ol>
                                 </div><!--//section-block-->
                             </section><!--//doc-section-->
-                            
+                            <section id="configuration-section" class="doc-section">
+                                <h2 class="section-title">Configuration</h2>
+                                <div class="section-block">
+                                    <p>Now that the web application has been downloaded and the Raspberry Pi dependencies have been installed, we need to configure both applications.  The good news is that this section is very simple - the tedious requirements have been completed.
+                                    </p>
+                                </div><!--//section-block-->
+                                <div id="webapp-config" class="section-block">
+                                    <h3 class="block-title">Web Application</h3>
+                                    <p>To setup up the web application, you will need to set a few simple variables.
+                                    </p>
+                                    <p>Find and open the file <code>/webapp/config.js</code>. In this file, you will find all of the application's variables.  The idea when creating the application was to provide a single point of configuration instead of having to modify multiple files. Then, change the options as you prefer.
+                                    </p>
+                                    <ul class="list">
+                                        <li><strong>port</strong> - defaults to the applications's environment-configured port or 8080</li>
+                                        <li><strong>repo</strong> - the repository type to use (e.g. 'mongodb' or 'documentdb')</li>
+                                        <li><strong>mongodb</strong> - the connection string of your mongodb instance</li>
+                                        <li><strong>documentdb</strong> - the connection string of your documentdb instance</li>
+                                        <li><strong>secret</strong> - a random, secret string that is used to encrypt JSON web tokens</li>
+                                        <li><strong>host</strong> - URI for your documentdb instance</li>
+                                        <li><strong>masterKey</strong> - 'password' for your documentdb instance</li>
+                                    </ul>
+                                </div><!--//section-block-->  
+                                <div id="pi-config" class="section-block">
+                                    <h3 class="block-title">Raspberry Pi</h3>
+                                    <p>Configuring the Raspberry Pi is really a simple, two-step process. First, we need to provision the Pi in our Azure tenant.  Then, we'll need to configure the monitoring application with our Pi's provisioned Id.
+                                    </p>
+                                    <br />
+                                    <h6>Registering the Device</h6>
+                                    <p>Find and open the file <code>/pi/registerDevice.js</code>. There are 2 lines that you will need to change.
+                                    </p>
+                                    <ol class="list">
+                                        <li>On line 3, you will see <code>device.deviceId = 'mtc-pi01';</code>.  Name your Pi device by changing <em>mtc-pi01</em> to a name you prefer.</li>
+                                        <li>Line 5 contains the connection string to your Azure's IoT Hub instance. While you could build this manually, the easiest option is to navigate to your IoT Hub instance in Azure, click on the Shared Access Policy that you created above (e.g. iothubowner) and copy either the <em>Connection string&mdash;primary key</em> or <em>Connection string&mdash;secondary key</em>.</li>
+                                        <li>Once you've performed both steps, save the file and exit to the bash prompt.</li>
+                                        <li>Run the script: <code>node ./registerDevice.js</code></li>
+                                        <li>Upon a successful run of the script, you will see two things printed to the console:
+                                            <ol class="list">
+                                                <li>Device id</li>
+                                                <li>Device key</li>
+                                            </ol>
+                                        </li>
+                                        <li>The device id should be the same as what you entered onto line 3 in step 1. Copy both, the device id and key</li>
+                                        <li>That specific Pi has now be registered with IoT Hub.</li>
+                                    </ol>
+                                    <br />
+                                    <h6>Configure the Listener</h6>
+                                    <p>Find and open the file <code>/pi/index.js</code>. There is one line that you will need to change.
+                                    </p>
+                                    <ol class="list">
+                                        <li>Line 5 contains the connection string to your Azure's IoT Hub instance <em>for that specific device</em>. Like the connection string from the previous section, it is divided into three components and separated by semi-colons:
+                                            <ul class="list">
+                                                <li><strong>Hostname</strong> - the host name for you IoT Hub instance (this should be the same as what you copy and pasted as the host name in the previous script - e.g NodeHub.azure-devices.net)</li>
+                                                <li><strong>DeviceId</strong> - the device id that you copied from the output in the previous step (also what you entered as the device id in the previous script)</li>
+                                                <li><strong>SharedAccessKey</strong> - the device key that you copied from the output in the previous step</li>
+                                            </ul>
+                                        </li>
+                                        <li>Once you've created the connection string (remember, that all three sections should be concatenated and separated by a semi-colon), save the file and exit to the bash prompt.</li>
+                                        <li>Run the script: <code>node ./index.js</code></li>
+                                        <li>The script will now run in the background, monitor any incoming iBeacon transmittals and push those up to your IoT Hub instance.</li>
+                                    </ol>
+                                </div><!--//section-block-->
+                                <div id="radbeacon-config" class="section-block">
+                                    <h3 class="block-title">RadBeacon Dot(s)</h3>
+                                    <p>You can now set up multiple RadBeacon Dot(s) to communicate with your Pi.  In order to do so, you'll need to download the RadBeacon application from your phone's marketplace.  Once the configuration application has been downloaded, follow the instructions below.
+                                    </p>
+                                    <ol class="list">
+                                        <li>Open the RadBeacon application on your phone.  You should see an empty list.<br />
+                                            <img src="assets/images/rb-list.JPG" style="width:40%;margin:20px auto;" />
+                                        </li>
+                                        <li>Hold down the on/off switch on the Dot for 3 seconds to put in Dot into configuration mode.  You should see a green light blink twice.</li>
+                                        <li>Refresh your phone's screen and you should see the Dot listed. (NOTE: Your ID will be different.)<br />
+                                            <img src="assets/images/rb-list-with-beacon.JPG" style="width:40%;margin:20px auto;" />
+                                        </li>
+                                        <li>Select the listed Dot to open the configuration screen.<br />
+                                            <img src="assets/images/rb-config-screen.JPG" style="width:40%;margin:20px auto;" />
+                                        </li>
+                                        <li>One the configuration screen, you'll see a UUID. The default UUID is the same for <em>all</em> Dots.  You'll need to generate a new one.</li>
+                                        <li>You can either type one in manually or select the "Generate UUID" link on the screen.</li>
+                                        <li>Optionally, you can increase/decrease the advertising rate and transmit power.
+                                            <ul class="list">
+                                                <li><strong>Advertising Rate</strong> - how frequently the Dot broadcasts a pulse or heartbeat.</li>
+                                                <li><strong>Transmit Power</strong> - increase the distance the Dot will broadcast. Increasing power will allow the Pi to "pick up" the Dot from longer distances, but decreases the Dot's battery life and increases percentage of error.  Decreasing power will reduce the transmission radius of the Dot, but increases the battery life and minimizes the margin of error.</li>
+                                            </ul>
+                                        </li>
+                                        <li>Once you've completed the above steps, choose "Actions" from the menu, then select "Apply" to save your settings.</li>
+                                        <li>Reboot your Dot (turn it off, then back on) to allow it to start transmitting.</li>
+                                    </ol>
+                                </div><!--//section-block-->    
+                            </section>                          
                             <section id="code-section" class="doc-section">
                                 <h2 class="section-title">Code</h2>
                                 <div class="section-block">
@@ -964,9 +1052,9 @@ echo $y;
                                 <li>
                                     <a class="scrollto" href="#configuration-section">Configuration</a>
                                     <ul class="nav doc-sub-menu">
-                                        <li><a class="scrollto" href="#website-config">Website</a></li>
+                                        <li><a class="scrollto" href="#webapp-config">Web Application</a></li>
                                         <li><a class="scrollto" href="#pi-config">Raspberry Pi</a></li>
-                                        <li><a class="scrollto" href="#ibeacon-config">iBeacon(s)</a></li>
+                                        <li><a class="scrollto" href="#radbeacon-config">RadBeacon Dot(s)</a></li>
                                     </ul><!--//nav-->
                                 </li>
                                 <li>
